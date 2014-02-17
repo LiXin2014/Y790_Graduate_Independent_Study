@@ -36,7 +36,11 @@ def main():
         providers = soup.findAll("a", {"class" : "provider"})
         for link in providers:
             fullLink = basicUrl+link.get('href')
-            vendorPage = opener.open(fullLink)
+            try:
+                vendorPage = opener.open(fullLink)
+            except :
+                print "Got URLError for: \t", fullLink
+                continue    
             soup = BeautifulSoup(vendorPage.read())
             try:
                 name = soup.findAll('h1').pop().contents[0]
